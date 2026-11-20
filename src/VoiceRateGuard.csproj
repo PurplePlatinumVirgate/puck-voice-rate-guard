@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net4.8</TargetFramework>
+    <Version>0.3.0</Version>
+    <AssemblyName>VoiceRateGuard</AssemblyName>
+    <RootNamespace>VoiceRateGuard</RootNamespace>
+    <OutputPath>..\bin\B1235\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <LangVersion>latest</LangVersion>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Game DLLs from the developer's own Puck B1235 install (libs/ is gitignored).
+         System.* is excluded: those resolve against the framework reference
+         assemblies and collide if pointed at these copies. Private=false keeps
+         them out of bin/, so only VoiceRateGuard.dll ships. -->
+    <Libs Include="..\libs\B1235\*.dll" Exclude="..\libs\B1235\System.*.dll" />
+
+    <Reference Include="@(Libs)">
+      <HintPath>%(Libs.FullPath)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Import Project="..\local.targets" Condition="Exists('..\local.targets')" />
+
+</Project>

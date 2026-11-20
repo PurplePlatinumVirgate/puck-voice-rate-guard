@@ -1,0 +1,28 @@
+# Game DLLs copied from a Puck install: not ours to redistribute.
+libs/
+
+# Per-developer MSBuild overrides (install paths). Track the `.example`.
+local.targets
+
+# .NET build output
+bin/
+obj/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+
+*.log
+
+.claude/
+
+workshop/
+
+*.local.md

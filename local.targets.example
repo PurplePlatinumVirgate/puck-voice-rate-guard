@@ -1,0 +1,21 @@
+<!--
+  Per-developer MSBuild override. Copy this file to `local.targets` and edit
+  <TargetDir> to point at a Puck install's Plugins folder. The real
+  `local.targets` is gitignored so each developer's paths stay local.
+
+  Imported by src/VoiceRateGuard.csproj. The post-build target copies the
+  built DLL into <PuckInstall>\Plugins\voice_rate_guard\.
+-->
+<Project>
+  <Target Name="PostBuildMoveDll"
+          AfterTargets="Build"
+          Condition="'$(MSBuildProjectName)' == 'VoiceRateGuard'">
+    <PropertyGroup>
+      <TargetDir>SET-ME\Plugins\voice_rate_guard</TargetDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(TargetDir)" />
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll"
+          DestinationFolder="$(TargetDir)"
+          OverwriteReadOnlyFiles="true" />
+  </Target>
+</Project>
