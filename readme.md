@@ -41,6 +41,19 @@ the Mods menu. Check `Player.log` for:
 [voice_rate_guard] enabled v0.3.0 (B1235, player role): voice starts with sampleRate outside 8000-48000 Hz, more than 15 voice starts per second, and malformed or excessive voice packets are ignored
 ```
 
+### Alternative for servers: turn off voice chat
+
+A server that does not need voice chat can turn it off in `server_config.json`
+instead, then restart:
+
+```json
+"useVoip": false
+```
+
+The server then relays no voice start and no voice packet, so the exploit
+cannot reach the players. This also turns off voice chat for all players. The
+key is case-sensitive. When the key is not in the file, voice chat is off.
+
 ## The problem
 
 The game does not check some voice-chat data that a client sends. Bad data
