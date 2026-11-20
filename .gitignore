@@ -26,3 +26,5 @@ Thumbs.db
 workshop/
 
 *.local.md
+
+__pycache__/

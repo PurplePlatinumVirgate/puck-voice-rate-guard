@@ -114,6 +114,29 @@ player who does not record is skipped (the game would only log it).
 In both roles, log lines are limited to one per player every 10 s. The next line
 shows how many attempts were not logged in between.
 
+## Discord alerts (optional)
+
+`tools/guard_alert.py` (Python 3, no packages) follows the server logs and
+sends a Discord webhook message when the server role blocks a player. The
+message shows the player name, Steam ID and server. Repeated blocks from one
+player are sent as one summary every 10 minutes. At most 20 messages are sent
+per hour.
+
+It reads every `*.log` file in `<logs-root>/<server>/Logs/` (or in
+`<logs-root>/Logs/` for one server). Put the webhook in
+`~/guard_alert/config.json` (`chmod 600`):
+
+```json
+{"webhook_url": "https://discord.com/api/webhooks/...", "host_label": "host1"}
+```
+
+Test without Discord, then run it from cron (`flock` keeps one copy running):
+
+```
+python3 guard_alert.py --dry-run --from-start --once --logs-root /path/to/servers
+* * * * * /usr/bin/flock -n $HOME/guard_alert/run.lock /usr/bin/python3 $HOME/guard_alert/guard_alert.py --logs-root /path/to/servers
+```
+
 ## Why it should not conflict with other mods
 
 - Harmony prefixes only, with their own Harmony id. `OnDisable` removes only
